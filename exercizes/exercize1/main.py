@@ -1,46 +1,57 @@
 number_max_of_apples = 48
 number_of_stacks = 5
+stack_size = number_max_of_apples // 5
 
 
 def construct_initial_basket():
-    apple_basket = []
-    for index in range(1, number_max_of_apples + 1):
-        item = build_apple_item(index)
-        apple_basket.append(item)
-    return apple_basket
+    return [_build_apple_item(index + 1) for index in range(number_max_of_apples)]
 
 
-def build_apple_item(index):
-    label = build_apple_label(index)
+def _build_apple_item(index):
+    label = _build_apple_label(index)
     apple = {
         "label": label,
-        "poisonous": is_poisonous(index)
+        "poisonous": _is_poisonous(index)
     }
     return apple
 
 
-def is_poisonous(index):
+def _is_poisonous(index):
     return index < 46
 
 
-def build_apple_label(index):
+def _build_apple_label(index):
     return "Apple n°{}".format(index)
 
 
 def split_in_5_stacks(basket):
-    stacks = []
-    stack_size = number_max_of_apples // 5
-    current_apple_idx = 0
+    stacks = [[basket[_compute_index(stack, index)] for index in range(stack_size)] for stack in
+              range(number_of_stacks)]
 
-    for stack_idx in range(0, number_of_stacks - 1):
-        stack = []
-        for apple_in_stack_idx in range(0, stack_size):
-            stack.append(basket[current_apple_idx])
-            current_apple_idx = current_apple_idx + 1
-        stacks.append(stack)
-    stack = []
-    while current_apple_idx < number_max_of_apples:
-        stack.append(basket[current_apple_idx])
-        current_apple_idx = current_apple_idx + 1
-    stacks.append(stack)
+    for idx in range((stack_size * number_of_stacks), number_max_of_apples):
+        stacks[4].append(basket[idx])
     return stacks
+
+
+def _compute_index(stack, index):
+    return stack * stack_size + index
+
+
+def shuffle_and_flatten(stacks):
+    shuffled_basket = [stacks[stack_idx] for stack_idx in [4, 0, 2, 1, 3]]
+    return [val for sublist in shuffled_basket for val in sublist]
+
+
+def main():
+    basket = construct_initial_basket()
+    for step in range(0, 102):
+        stacks = split_in_5_stacks(basket)
+        basket = shuffle_and_flatten(stacks)
+        print("step:", step, basket, "p21", basket.index({'label': 'Apple n°21', 'poisonous': True}),
+              "p31", basket.index({'label': 'Apple n°31', 'poisonous': True}),
+              "p8", basket.index({'label': 'Apple n°8', 'poisonous': True}))
+
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
