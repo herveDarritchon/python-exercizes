@@ -4,7 +4,7 @@ from exercizes.exercize1.main import construct_initial_basket, number_max_of_app
     shuffle_and_flatten
 
 
-class MyTestCase(unittest.TestCase):
+class Exercize1TestCase(unittest.TestCase):
 
     def test_something(self):
         self.assertEqual(True, True)
