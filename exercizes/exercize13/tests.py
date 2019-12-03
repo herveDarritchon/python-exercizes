@@ -1,7 +1,7 @@
 import unittest
 
 from exercizes.exercize13.main import get_lines_from_file, split_in_two_parts, zip_lefts_and_rights_array, \
-    create_char_dict, sum_lefts_and_rights, filter_26_value
+    create_char_dict, sum_lefts_and_rights
 
 
 class Exercize13TestCase(unittest.TestCase):
