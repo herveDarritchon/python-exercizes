@@ -53,7 +53,7 @@ def filter_26_value(sum_array):
     return "".join(result)
 
 
-def main():
+def decode_message():
     char_dict = create_char_dict()
     lines = get_lines_from_file()
     lefts, rights = split_in_two_parts(lines)
@@ -64,4 +64,4 @@ def main():
 
 if __name__ == "__main__":
     # execute only if run as a script
-    main()
+    decode_message()
